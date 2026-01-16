@@ -1,0 +1,42 @@
+# Build artifacts
+**/bin/
+**/obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# VS Code settings
+.vscode/
+
+# ASP.NET secrets
+**/appsettings.*.json
+secrets.json
+
+# EF Core migrations (optional)
+**/Migrations/
+
+# Logs and temp files
+*.log
+*.tmp
+*.cache
+
+# Dependency folders
+node_modules/
+packages/
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Rider/JetBrains (if ever opened in Rider)
+.idea/
+*.iml
+
+# HTTP client requests (if using REST Client extension)
+httpRequests/
+
+# GitHub metadata (optional)
+.github/

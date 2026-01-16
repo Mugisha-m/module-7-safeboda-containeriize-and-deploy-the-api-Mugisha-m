@@ -1,0 +1,48 @@
+@page "/drivers"
+@using SafeBoda.Admin.Services
+@inject DriversClient DriversClient
+@inject AuthService AuthService
+
+@if (!AuthService.IsAuthenticated)
+{
+    <RedirectToLogin />
+}
+else
+{
+    <h3>Registered Drivers</h3>
+
+    @if (drivers == null)
+    {
+        <p>Loading...</p>
+    }
+    else
+    {
+        <table>
+            <thead>
+                <tr><th>ID</th><th>Name</th><th>License Number</th></tr>
+            </thead>
+            <tbody>
+                @foreach (var driver in drivers)
+                {
+                    <tr>
+                        <td>@driver.Id</td>
+                        <td>@driver.Name</td>
+                        <td>@driver.LicenseNumber</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}
+
+@code {
+    private List<DriverDto> drivers;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (AuthService.IsAuthenticated)
+        {
+            drivers = await DriversClient.GetDriversAsync();
+        }
+    }
+}

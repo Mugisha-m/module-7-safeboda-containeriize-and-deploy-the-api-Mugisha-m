@@ -1,0 +1,48 @@
+@page "/trips"
+@using SafeBoda.Admin.Services
+@inject TripsClient TripsClient
+@inject AuthService AuthService
+
+@if (!AuthService.IsAuthenticated)
+{
+    <RedirectToLogin />
+}
+else
+{
+    <h3>Active Trips</h3>
+
+    @if (trips == null)
+    {
+        <p>Loading...</p>
+    }
+    else
+    {
+        <table>
+            <thead>
+                <tr><th>ID</th><th>Driver</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+                @foreach (var trip in trips)
+                {
+                    <tr>
+                        <td>@trip.Id</td>
+                        <td>@trip.DriverName</td>
+                        <td>@trip.Status</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}
+
+@code {
+    private List<TripDto> trips;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (AuthService.IsAuthenticated)
+        {
+            trips = await TripsClient.GetActiveTripsAsync();
+        }
+    }
+}

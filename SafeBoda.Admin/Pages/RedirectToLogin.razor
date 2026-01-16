@@ -1,0 +1,8 @@
+@inject Microsoft.AspNetCore.Components.NavigationManager NavManager
+
+@code {
+    protected override void OnInitialized()
+    {
+        NavManager.NavigateTo("/login");
+    }
+}

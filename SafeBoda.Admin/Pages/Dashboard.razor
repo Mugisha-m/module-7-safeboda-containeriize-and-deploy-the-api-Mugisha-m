@@ -1,0 +1,38 @@
+@page "/dashboard"
+@using SafeBoda.Admin.Services
+@inject SystemClient SystemClient
+@inject AuthService AuthService
+
+@if (!AuthService.IsAuthenticated)
+{
+    <RedirectToLogin />
+}
+else
+{
+    <h3>System Dashboard</h3>
+
+    @if (status == null)
+    {
+        <p>Loading system status...</p>
+    }
+    else
+    {
+        <div class="dashboard">
+            <p><strong>Active Trips:</strong> @status.ActiveTrips</p>
+            <p><strong>Registered Drivers:</strong> @status.RegisteredDrivers</p>
+            <p><strong>System Health:</strong> @status.Health</p>
+        </div>
+    }
+}
+
+@code {
+    private SystemStatusDto status;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (AuthService.IsAuthenticated)
+        {
+            status = await SystemClient.GetStatusAsync();
+        }
+    }
+}
